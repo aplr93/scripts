@@ -1,28 +1,30 @@
-drop table if exists cliente, pedido, item_do_pedido, produto;
+drop table if exists customer, orders, order_item, product;
 
-create table cliente (
+create table customer (
     id serial not null primary key,
-    nome varchar(30) not null,
-    sobrenome varchar(50) not null
+    cpf varchar(11) not null,
+    first_name varchar(50) not null,
+    last_name varchar(50) not null
 );
 
-create table pedido (
+create table orders (
     id serial not null primary key,
-    data date not null,
-    id_cliente int not null,
-    foreign key(id_cliente) references cliente(id)
+    date date not null,
+    customer_id int not null,
+    foreign key(customer_id) references customer(id)
 );
 
-create table produto (
+create table product (
     id serial not null primary key,
-    descricao varchar(45) not null
+    description varchar(50) not null
 );
 
-create table item_do_pedido (
-    id_pedido int not null,
-    id_produto int not null,
-    qtdade int not null,
-    foreign key(id_pedido) references pedido(id),
-    foreign key(id_produto) references produto(id)
+create table order_item (
+    id serial not null primary key,
+    order_id int not null,
+    product_id int not null,
+    quantity int not null,
+    foreign key(order_id) references orders(id),
+    foreign key(product_id) references product(id)
 );
 
